@@ -1,0 +1,7 @@
+*\bin
+*\lib
+*\include
+*\env
+*\pyvenv.cfg
+*.DS_Store
+.venv
