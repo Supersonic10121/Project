@@ -23,8 +23,11 @@ def download_file(client_socket, file):
     if not os.path.exists(file):
         print(f"File not found: {file}")
         return
+    
 
-def delete():
-
+def delete(client_socket, file):
+    if not os.path.exists(file):
+        print(f"File not found: {file}")
+        return
 
 
