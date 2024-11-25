@@ -19,7 +19,7 @@ def send_file(client_socket, file_name):
     client_socket.sendall(f"{file_size}".encode())  # Send file size to the client
 
     try:
-        response = client_socket.recv(1024).decode()
+        response = client_socket.recv(4096).decode()
         if response != "READY":
             print(f"Client not ready for file transfer. Received: {response}")
             return
@@ -40,6 +40,7 @@ def send_file(client_socket, file_name):
 
 
 def receive(client_socket):
+    print("Recieving...")
     try:
         # Receive the command from the client
         try:
@@ -87,9 +88,17 @@ def receive(client_socket):
                 client_socket.sendall("\n".join(dir_listing).encode())
             else:
                 client_socket.sendall("Directory is empty.".encode())
+                
+        elif data.startswith("CRT_DIR"):
+            print("Command Recieved - Creating Directory")
+            client_socket.sendall("Created Directory".encode())
+            
+        elif data.startswith("DEL_DIR"):
+            client_socket.sendall("Deleting Directory".encode())
 
         else:
             client_socket.sendall("ERROR: Unknown command".encode())
+            
 
     except Exception as e:
         print(f"Error: {e}")
