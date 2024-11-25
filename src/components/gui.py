@@ -15,8 +15,12 @@ import threading
 
 class View:
     def __init__(self, root):
+        
+        self.server_ip = '34.139.230.231'
+        self.server_port = 3300
+        
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect(('127.0.0.1', 3300))
+        self.client.connect((self.server_ip, self.server_port))
 
         # File vars
         self.file_path = ""
@@ -60,7 +64,7 @@ class View:
     def reconnect(self):
         self.client.close()
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect(('127.0.0.1', 3300))  # Reconnect to the server
+        self.client.connect((self.server_ip, self.server_port))  # Reconnect to the server
         print("Reconnected to server.")
 
     def update_status(self, message, error=False):
