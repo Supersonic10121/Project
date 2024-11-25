@@ -5,3 +5,4 @@
 *\pyvenv.cfg
 *.DS_Store
 ./venv
+*Test_Files
