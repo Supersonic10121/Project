@@ -6,3 +6,4 @@
 *.DS_Store
 ./venv
 *Test_Files
+__pycache__

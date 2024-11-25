@@ -88,11 +88,17 @@ def receive(client_socket):
                 client_socket.sendall("\n".join(dir_listing).encode())
             else:
                 client_socket.sendall("Directory is empty.".encode())
+                
+        elif data.startswith("CRT_DIR"):
+            print("Command Recieved - Creating Directory")
+            client_socket.sendall("Created Directory".encode())
+            
+        elif data.startswith("DEL_DIR"):
+            client_socket.sendall("Deleting Directory".encode())
 
         else:
             client_socket.sendall("ERROR: Unknown command".encode())
             
-        client_socket.close()
 
     except Exception as e:
         print(f"Error: {e}")

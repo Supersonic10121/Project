@@ -77,7 +77,7 @@ def download_file(client_socket, file_name, save_path):
 
 def delete_file(client_socket, file_name):
     client_socket.sendall(f"DELETE|{file_name}".encode())
-    response = client_socket.recv(1024).decode()
+    response = client_socket.recv(4096).decode()
     print(f"Server: {response}")
 
 
@@ -88,12 +88,10 @@ def list_directory(client_socket):
 
 
 def create_subfolder(client_socket, path):
-    client_socket.sendall(f"CREATE_SUBFOLDER|{path}".encode())
-    response = client_socket.recv(1024).decode()
-    print(response)
+    client_socket.sendall(f"CRT_SUB|{path}".encode())
+    response = client_socket.recv(4096).decode()
 
 
 def delete_subfolder(client_socket, path):
-    client_socket.sendall(f"DELETE_SUBFOLDER|{path}".encode())
-    response = client_socket.recv(1024).decode()
-    print(response)
+    client_socket.sendall(f"DEL_SUB|{path}".encode())
+    response = client_socket.recv(4096).decode()

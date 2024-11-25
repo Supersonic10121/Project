@@ -155,7 +155,6 @@ class View:
             self.update_status(f"Error viewing directory: {str(e)}", error=True)
 
     def create_folder(self):
-        self.reconnect()
         """Create a subfolder on the server in a separate thread."""
         folder_name = simpledialog.askstring("Create Subfolder", "Enter the subfolder path to create:")
         if not folder_name:
@@ -164,6 +163,7 @@ class View:
         create_folder_thread.start()
 
     def create_folder_thread(self, folder_name):
+        self.reconnect()
         """Background thread for creating the subfolder."""
         try:
             create_subfolder(self.client, folder_name)
@@ -179,6 +179,7 @@ class View:
         delete_folder_thread.start()
 
     def delete_folder_thread(self, folder_name):
+        self.reconnect()
         """Background thread for deleting the subfolder."""
         try:
             delete_subfolder(self.client, folder_name)
