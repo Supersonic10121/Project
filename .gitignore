@@ -4,4 +4,6 @@
 *\env
 *\pyvenv.cfg
 *.DS_Store
-.venv
+./venv
+*Test_Files
+__pycache__
