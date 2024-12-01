@@ -89,6 +89,7 @@ def list_directory(client_socket):
     client_socket.sendall("DIR".encode())
     response = client_socket.recv(4096).decode()
     print(f"Server Directory:\n{response}")
+    return response
 
 
 def create_subfolder(client_socket, path):
