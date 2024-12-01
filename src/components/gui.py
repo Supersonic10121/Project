@@ -11,6 +11,8 @@ from client import (
 )
 import socket
 import threading
+from analysis import NetworkAnalysis
+network_analyzer = NetworkAnalysis() # Initialize the network analysis module
 
 
 class View:
