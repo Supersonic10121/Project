@@ -1,6 +1,9 @@
 import socket
 import os
 import time  # For performance timing
+from analysis import NetworkAnalysis
+
+network_analyzer = NetworkAnalysis() # Initialize the network analysis module
 
 def upload_file(client_socket, file_path, gui):
     if not os.path.exists(file_path):
@@ -32,7 +35,7 @@ def upload_file(client_socket, file_path, gui):
 
     gui.update_status(f"File '{file_name}' uploaded successfully.")
     gui.update_status(f"Transfer time is {transfer_time:.2f} seconds and transfer rate is {transfer_rate:.2f} MB/s")
-
+    network_analyzer.log_event("Upload", file_name, file_size, transfer_time, transfer_rate)
 
 def download_file(client_socket, file_name, save_path):
     try:
@@ -67,7 +70,8 @@ def download_file(client_socket, file_name, save_path):
         transfer_rate = file_size / (1024 * 1024 * transfer_time)  # MB/s
         print(f"File '{file_name}' downloaded successfully to '{save_path}'.")
         print(f"Transfer time is {transfer_time:.2f} seconds and transfer rate is {transfer_rate:.2f} MB/s")
-
+        network_analyzer.log_event("Download", file_name, file_size, transfer_time, transfer_rate)
+        
     except ConnectionAbortedError as e:
         print(f"Connection was aborted: {e}")
 
