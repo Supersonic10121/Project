@@ -15,8 +15,12 @@ import threading
 
 class View:
     def __init__(self, root):
+        
+        self.server_ip = '127.0.0.1'
+        self.server_port = 3300
+        
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect(('127.0.0.1', 3300))
+        self.client.connect((self.server_ip, self.server_port))
 
         # File vars
         self.file_path = ""
@@ -60,8 +64,24 @@ class View:
     def reconnect(self):
         self.client.close()
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect(('127.0.0.1', 3300))  # Reconnect to the server
+        self.client.connect((self.server_ip, self.server_port))  # Reconnect to the server
         print("Reconnected to server.")
+        
+        
+    def openNewWindow(self, response):
+     
+
+        newWindow = tk.Toplevel(root)
+        newWindow.title("Directory")
+        print("Hello!")
+ 
+    # sets the geometry of toplevel
+        newWindow.geometry("300x300")
+        
+        print(response)
+ 
+
+        tk.Label(newWindow, text = response).pack()
 
     def update_status(self, message, error=False):
         """Update the status message in the GUI (run on the main thread)."""
@@ -148,9 +168,9 @@ class View:
         self.reconnect()
         """Background thread for viewing the directory."""
         try:
-            list_directory(self.client)
+            list = list_directory(self.client)
             response = self.client.recv(4096).decode()
-            self.root.after(0, messagebox.showinfo, "Server Directory", response)
+            self.root.after(0, self.openNewWindow(list), "Server Directory", response)
         except Exception as e:
             self.update_status(f"Error viewing directory: {str(e)}", error=True)
 
